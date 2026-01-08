@@ -13,7 +13,14 @@ A simple Docker container with an SSH server for testing purposes.
 
 ## Usage
 
-### Building the Docker Image
+### Using the Pre-built Image from GitHub Container Registry
+
+```bash
+docker pull ghcr.io/plfanzen/ssh-test:latest
+docker run -d -p 2222:22 --name ssh-test ghcr.io/plfanzen/ssh-test:latest
+```
+
+### Building the Docker Image Locally
 
 ```bash
 docker build -t ssh-server .
@@ -49,9 +56,16 @@ docker rm ssh-test
 ## CI/CD
 
 This project includes a GitHub Actions workflow that:
-1. Builds the Docker image
+1. Builds the Docker image and pushes it to GitHub Container Registry (ghcr.io)
 2. Runs the container
 3. Tests SSH connectivity
 4. Reports results
 
 The workflow runs automatically on pushes and pull requests to the main/master branch.
+
+### Available Images
+
+Images are automatically published to:
+- `ghcr.io/plfanzen/ssh-test:latest` - Latest version from main/master branch
+- `ghcr.io/plfanzen/ssh-test:<branch>` - Branch-specific builds
+- `ghcr.io/plfanzen/ssh-test:<branch>-<sha>` - Commit-specific builds
