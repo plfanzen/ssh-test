@@ -9,6 +9,8 @@ A simple Docker container with an SSH server for testing purposes.
 - Pre-configured user: `plfanzen` with password: `plfanzy`
 - Automated CI/CD with GitHub Actions
 
+**Note:** This container uses a hardcoded password for testing purposes only. Do not use in production environments without implementing proper security measures.
+
 ## Usage
 
 ### Building the Docker Image

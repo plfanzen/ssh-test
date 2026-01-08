@@ -20,7 +20,15 @@ jobs:
     - name: Run SSH server container
       run: |
         docker run -d --name ssh-test -p 2222:22 ssh-server
-        sleep 5
+        # Wait for SSH service to be ready with retries
+        for i in {1..30}; do
+          if sshpass -p 'plfanzy' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=2 -p 2222 plfanzen@localhost 'exit' 2>/dev/null; then
+            echo "SSH service is ready"
+            break
+          fi
+          echo "Waiting for SSH service... ($i/30)"
+          sleep 1
+        done
     
     - name: Install SSH client
       run: sudo apt-get update && sudo apt-get install -y sshpass
